@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.rakhmonov.restapiretrofit.databinding.RvItemBinding
+import uz.rakhmonov.restapiretrofit.models.MyToDoRequest
 import uz.rakhmonov.restapiretrofit.models.MyToDoX
 
-class RV_adapter (val list:ArrayList<MyToDoX> = ArrayList()):RecyclerView.Adapter<RV_adapter.VH>(){
+class RV_adapter (val rvAction: RvAction, val list:ArrayList<MyToDoX> = ArrayList()):RecyclerView.Adapter<RV_adapter.VH>(){
 
     inner class VH (val rvItemBinding: RvItemBinding): RecyclerView.ViewHolder(rvItemBinding.root){
         fun onHolder(myToDoX: MyToDoX, position:Int){
@@ -15,7 +16,13 @@ class RV_adapter (val list:ArrayList<MyToDoX> = ArrayList()):RecyclerView.Adapte
             rvItemBinding.deadline.text=myToDoX.oxirgi_muddat
             rvItemBinding.tvMatn.text=myToDoX.matn
 
-
+            rvItemBinding.root.setOnLongClickListener {
+                rvAction.deleteTodo(myToDoX)
+                true
+            }
+            rvItemBinding.root.setOnClickListener {
+                rvAction.updateTodo(myToDoX)
+            }
 
         }
 
@@ -33,7 +40,9 @@ class RV_adapter (val list:ArrayList<MyToDoX> = ArrayList()):RecyclerView.Adapte
 
     override fun getItemCount(): Int=list.size
 
-
-
+    interface RvAction{
+        fun deleteTodo(myToDoX: MyToDoX)
+        fun updateTodo(myToDoX: MyToDoX)
+    }
 
 }

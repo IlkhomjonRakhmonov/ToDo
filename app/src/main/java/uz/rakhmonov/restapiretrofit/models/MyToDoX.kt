@@ -1,9 +1,9 @@
 package uz.rakhmonov.restapiretrofit.models
 
 data class MyToDoX(
-    val id: Int,
-    val sarlavha: String,
-    val matn: String,
-    val holat: String,
-    val oxirgi_muddat: String
+    var id: Int,
+    var sarlavha: String,
+    var matn: String,
+    var holat: String,
+    var oxirgi_muddat: String
 )
