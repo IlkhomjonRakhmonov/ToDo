@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="status"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/deadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="muddati"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        />  <TextView
+        android:id="@+id/tv_matn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="matn"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        />
+
+</LinearLayout>

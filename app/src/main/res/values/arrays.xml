@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="holati">
+        <item>yangi</item>
+        <item>bajarilmoqda</item>
+        <item>yakunlangan</item>
+    </string-array>
+</resources>
