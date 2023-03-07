@@ -9,7 +9,6 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
-import uz.rakhmonov.restapiretrofit.models.MyReqDelete
 import uz.rakhmonov.restapiretrofit.models.MyToDoRequest
 import uz.rakhmonov.restapiretrofit.models.MyToDoX
 
@@ -22,7 +21,7 @@ interface MyRetrofitService {
   fun addToDo(@Body myToDoRequest: MyToDoRequest):Call<MyToDoX>
 
   @DELETE("plan/{id}/")
-  fun deleteTodo(@Path("id") id:Int):Call<MyReqDelete>
+  fun deleteTodo(@Path("id") id:Int):Call<Int>
 
   @PATCH("plan/{id}/")
   fun updateTodo(@Path("id") id:Int, @Body myToDoRequest: MyToDoRequest): Call<MyToDoX>

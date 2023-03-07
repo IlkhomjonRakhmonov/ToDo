@@ -1,5 +1,5 @@
 package uz.rakhmonov.restapiretrofit.models
 
-data class MyReqDelete(
-    val detail: String
-)
+//data class MyReqDelete(
+//    val detail: String
+//)
