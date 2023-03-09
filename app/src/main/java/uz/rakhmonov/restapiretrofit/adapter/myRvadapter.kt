@@ -2,6 +2,7 @@ package uz.rakhmonov.restapiretrofit.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import uz.rakhmonov.restapiretrofit.databinding.RvItemBinding
 import uz.rakhmonov.restapiretrofit.models.MyToDoX
@@ -14,12 +15,13 @@ class RV_adapter (val rvAction: RvAction, val list:ArrayList<MyToDoX> = ArrayLis
             rvItemBinding.status.text=myToDoX.holat
             rvItemBinding.deadline.text=myToDoX.oxirgi_muddat
 
-            rvItemBinding.root.setOnLongClickListener {
-                rvAction.deleteTodo(myToDoX)
-                true
-            }
-            rvItemBinding.root.setOnClickListener {
-                rvAction.updateTodo(myToDoX)
+//            rvItemBinding.root.setOnLongClickListener {
+//                rvAction.deleteTodo(myToDoX)
+//                true
+//            }
+            rvItemBinding.popupImage.setOnClickListener {
+                rvAction.onClick(myToDoX,position,rvItemBinding.popupImage)
+//                rvAction.updateTodo(myToDoX)
             }
 
         }
@@ -39,8 +41,9 @@ class RV_adapter (val rvAction: RvAction, val list:ArrayList<MyToDoX> = ArrayLis
     override fun getItemCount(): Int=list.size
 
     interface RvAction{
-        fun deleteTodo(myToDoX: MyToDoX)
-        fun updateTodo(myToDoX: MyToDoX)
+        fun onClick(myToDoX: MyToDoX, position: Int,imageView: ImageView)
+//        fun deleteTodo(myToDoX: MyToDoX)
+//        fun updateTodo(myToDoX: MyToDoX)
     }
 
 }

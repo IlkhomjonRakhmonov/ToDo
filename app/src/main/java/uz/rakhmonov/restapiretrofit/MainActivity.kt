@@ -1,9 +1,15 @@
 package uz.rakhmonov.restapiretrofit
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import retrofit2.Call
@@ -14,12 +20,15 @@ import uz.rakhmonov.restapiretrofit.databinding.ActivityMainBinding
 import uz.rakhmonov.restapiretrofit.databinding.ItemDialogBinding
 import uz.rakhmonov.restapiretrofit.models.MyToDoX
 import uz.rakhmonov.restapiretrofit.retrofit.APIclient
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
     
     private val binding:ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var rvAdapter: RV_adapter
+    private var myCalendar:Calendar=Calendar.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -45,8 +54,25 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
             val  dialogBinding=ItemDialogBinding.inflate(layoutInflater)
         dialogBinding.progresBar.visibility=View.GONE
             dialog.setView(dialogBinding.root)
+
+            dialogBinding.calendar.setOnClickListener {
+              DatePickerDialog(this,object :OnDateSetListener{
+                    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                        myCalendar.set(Calendar.YEAR,year)
+                        myCalendar.set(Calendar.MONTH,month)
+                        myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth)
+                        val myFormat = "dd/MM/yyyy"
+                        val dateFormat = SimpleDateFormat(myFormat, Locale.US)
+                        dialogBinding.tvDeadline.setText(dateFormat.format(myCalendar.time))
+
+                    }
+                },2023,3,10)
+                    .show()
+            }
+
+
             dialogBinding.btnSaveDialog .setOnClickListener {
-                if (dialogBinding.tvTitle.text.isNotEmpty() && dialogBinding.tvDeadline.text.isNotEmpty() ){
+                if (dialogBinding.tvTitle.text.isNotEmpty() && dialogBinding.tvDeadline.text.isNotEmpty()){
                     
                 val myToDoX= MyToDoX(
                     dialogBinding.tvTitle.text.toString(),
@@ -114,7 +140,7 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
             })
     }
 
-    override fun deleteTodo(myToDoX: MyToDoX) {
+     fun deleteTodo(myToDoX: MyToDoX) {
         APIclient.getApiService().deleteTodo(myToDoX.id)
             .enqueue(object :Callback<Int>{
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
@@ -131,7 +157,7 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
     }
 
     @SuppressLint("SuspiciousIndentation")
-    override fun updateTodo(myToDoX: MyToDoX) {
+     fun updateTodo(myToDoX: MyToDoX) {
         val dialog=AlertDialog.Builder(this).create()
         val dialogBinding=ItemDialogBinding.inflate(layoutInflater)
         dialogBinding.progresBar.visibility=View.GONE
@@ -177,6 +203,28 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
         }
 
         dialog.show()
+
+    }
+
+    override fun onClick(myToDoX: MyToDoX,position:Int,imageView: ImageView) {
+        val popupMenu=PopupMenu(this,imageView)
+        popupMenu.inflate(R.menu.popup_item)
+        popupMenu.setOnMenuItemClickListener {
+        when(it.itemId){
+            R.id.delete->{
+                deleteTodo(myToDoX)
+
+            }
+            R.id.update->{
+                updateTodo(myToDoX)
+
+            }
+
+        }
+true
+        }
+        popupMenu.show()
+
 
     }
 }
