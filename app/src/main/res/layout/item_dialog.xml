@@ -52,29 +52,7 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        >
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/tv_text"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:hint="matn"
-                android:textSize="20sp"/>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -148,7 +126,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Ro'yxatga qo'shish"
+            android:text="Saqlash"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="20sp"/>

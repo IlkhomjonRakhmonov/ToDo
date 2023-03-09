@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.rakhmonov.restapiretrofit.databinding.RvItemBinding
-import uz.rakhmonov.restapiretrofit.models.MyToDoRequest
 import uz.rakhmonov.restapiretrofit.models.MyToDoX
 
 class RV_adapter (val rvAction: RvAction, val list:ArrayList<MyToDoX> = ArrayList()):RecyclerView.Adapter<RV_adapter.VH>(){
@@ -14,7 +13,6 @@ class RV_adapter (val rvAction: RvAction, val list:ArrayList<MyToDoX> = ArrayLis
             rvItemBinding.name.text=myToDoX.sarlavha
             rvItemBinding.status.text=myToDoX.holat
             rvItemBinding.deadline.text=myToDoX.oxirgi_muddat
-            rvItemBinding.tvMatn.text=myToDoX.matn
 
             rvItemBinding.root.setOnLongClickListener {
                 rvAction.deleteTodo(myToDoX)

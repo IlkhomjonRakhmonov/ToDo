@@ -1,41 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="2dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="#FBC112">
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
-        android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textColor="@color/teal_700"
         />
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="status"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        />
+
     <TextView
         android:id="@+id/deadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="muddati"
         android:textSize="20sp"
-        android:textColor="@color/black"
-        />  <TextView
-        android:id="@+id/tv_matn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="matn"
-        android:textSize="20sp"
-        android:textColor="@color/black"
+        android:textColor="@color/teal_700"
         />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#FBC112">
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="status"
+            android:textSize="20sp"
+            android:textColor="@color/teal_700"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.3"
+        android:orientation="horizontal"
+        android:background="#FBC112">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:src="@drawable/baseline_more_vert_24"
+        />
+    </LinearLayout>
+
 
 </LinearLayout>

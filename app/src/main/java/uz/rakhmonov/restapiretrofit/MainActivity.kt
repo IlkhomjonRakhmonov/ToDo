@@ -1,5 +1,6 @@
 package uz.rakhmonov.restapiretrofit
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,7 +12,6 @@ import retrofit2.Response
 import uz.rakhmonov.restapiretrofit.adapter.RV_adapter
 import uz.rakhmonov.restapiretrofit.databinding.ActivityMainBinding
 import uz.rakhmonov.restapiretrofit.databinding.ItemDialogBinding
-import uz.rakhmonov.restapiretrofit.models.MyToDoRequest
 import uz.rakhmonov.restapiretrofit.models.MyToDoX
 import uz.rakhmonov.restapiretrofit.retrofit.APIclient
 
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun addToDo() {
 
             val dialog=AlertDialog.Builder(this).create()
@@ -45,16 +46,18 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
         dialogBinding.progresBar.visibility=View.GONE
             dialog.setView(dialogBinding.root)
             dialogBinding.btnSaveDialog .setOnClickListener {
-                val mytodoRequest= MyToDoRequest(
+                if (dialogBinding.tvTitle.text.isNotEmpty() && dialogBinding.tvDeadline.text.isNotEmpty() ){
+                    
+                val myToDoX= MyToDoX(
                     dialogBinding.tvTitle.text.toString(),
-                    dialogBinding.tvText.text.toString(),
-                    "eski",
+//                    dialogBinding.tvText.text.toString(),
+                    dialogBinding.spinnerStatus.selectedItem.toString(),
                     dialogBinding.tvDeadline.text.toString()
 
 
                 )
                 dialogBinding.progresBar.visibility=View.VISIBLE
-                APIclient.getApiService().addToDo(mytodoRequest)
+                APIclient.getApiService().addToDo(myToDoX)
                     .enqueue(object :Callback<MyToDoX>{
                         override fun onResponse(call: Call<MyToDoX>, response: Response<MyToDoX>) {
                           
@@ -74,6 +77,9 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
                     })
                 loadData()
 
+            }else{
+                    Toast.makeText(this, "Iltimos, barcha qatorlarni to'ldiring", Toast.LENGTH_SHORT).show()
+                }
             }
             dialog.show()
 
@@ -124,8 +130,53 @@ class MainActivity : AppCompatActivity(), RV_adapter.RvAction {
             })
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun updateTodo(myToDoX: MyToDoX) {
-        Toast.makeText(this, "updatemaaaan", Toast.LENGTH_SHORT).show()
-//        APIclient
+        val dialog=AlertDialog.Builder(this).create()
+        val dialogBinding=ItemDialogBinding.inflate(layoutInflater)
+        dialogBinding.progresBar.visibility=View.GONE
+        dialog.setView(dialogBinding.root)
+
+        dialogBinding.tvTitle.setText(myToDoX.sarlavha)
+//        dialogBinding.tvText.setText(myToDoX.matn)
+        dialogBinding.tvDeadline.setText(myToDoX.oxirgi_muddat)
+        when(myToDoX.holat){
+            "yangi"->dialogBinding.spinnerStatus.setSelection(0)
+            "bajarilmoqda"->dialogBinding.spinnerStatus.setSelection(1)
+            "yakunlangan"->dialogBinding.spinnerStatus.setSelection(2)
+        }
+        dialogBinding.btnSaveDialog.setOnClickListener {
+            loadData()
+            if (dialogBinding.tvTitle.text.isNotEmpty() && dialogBinding.tvDeadline.text.isNotEmpty() ){
+
+            myToDoX.sarlavha=dialogBinding.tvTitle.text.toString()
+//            myToDoX.matn=dialogBinding.tvText.text.toString()
+            myToDoX.oxirgi_muddat=dialogBinding.tvDeadline.text.toString()
+            myToDoX.holat=dialogBinding.spinnerStatus.selectedItem.toString()
+                
+        dialogBinding.progresBar.visibility=View.VISIBLE
+            APIclient.getApiService().updateToDo(myToDoX.id, MyToDoX(myToDoX.sarlavha,myToDoX.holat,myToDoX.oxirgi_muddat))
+                .enqueue(object :Callback<MyToDoX>{
+                    override fun onResponse(call: Call<MyToDoX>, response: Response<MyToDoX>) {
+                        if (response.isSuccessful){
+                            Toast.makeText(this@MainActivity, "${myToDoX.id} id o'zgartirildi", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                            dialogBinding.progresBar.visibility=View.GONE
+                        }
+                    }
+
+                    override fun onFailure(call: Call<MyToDoX>, t: Throwable) {
+                        Toast.makeText(this@MainActivity, "xatolik yuz berdi", Toast.LENGTH_SHORT).show()
+                        dialogBinding.progresBar.visibility=View.GONE
+
+                    }
+                })
+        }else{
+                Toast.makeText(this, "Iltimos, barcha qatorlarni to'ldiring", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dialog.show()
+
     }
 }
